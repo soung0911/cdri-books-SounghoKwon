@@ -1,0 +1,112 @@
+@import 'tailwindcss';
+
+:root {
+  --font-sans:
+    'Noto Sans KR', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+
+  --font-medium: 500;
+  --font-bold: 700;
+
+  --text-title1: 24px;
+  --leading-title1: 24px;
+
+  --text-title2: 22px;
+  --leading-title2: 24px;
+
+  --text-title3: 18px;
+  --leading-title3: 18px;
+
+  --text-body1: 20px;
+  --leading-body1: 20px;
+
+  --text-body2: 14px;
+  --leading-body2: 14px;
+
+  --text-body2-bold: 14px;
+  --leading-body2-bold: 14px;
+
+  --text-caption: 16px;
+  --leading-caption: 16px;
+
+  --text-small: 10px;
+  --leading-small: 10px;
+
+  --color-palette-primary: #4880ee;
+  --color-palette-red: #e84118;
+  --color-palette-gray: #dadada;
+  --color-palette-light-gray: #f2f4f6;
+  --color-palette-white: #ffffff;
+  --color-palette-black: #222222;
+
+  --color-text-primary: #353c49;
+  --color-text-secondary: #6d7582;
+  --color-text-subtitle: #8d94a0;
+}
+
+@layer utilities {
+  .typo-title1 {
+    font-family: var(--font-sans);
+    font-size: var(--text-title1);
+    line-height: var(--leading-title1);
+    font-weight: var(--font-bold);
+  }
+  .typo-title2 {
+    font-family: var(--font-sans);
+    font-size: var(--text-title2);
+    line-height: var(--leading-title2);
+    font-weight: var(--font-bold);
+  }
+  .typo-title3 {
+    font-family: var(--font-sans);
+    font-size: var(--text-title3);
+    line-height: var(--leading-title3);
+    font-weight: var(--font-bold);
+  }
+  .typo-body1 {
+    font-family: var(--font-sans);
+    font-size: var(--text-body1);
+    line-height: var(--leading-body1);
+    font-weight: var(--font-medium);
+  }
+  .typo-body2 {
+    font-family: var(--font-sans);
+    font-size: var(--text-body2);
+    line-height: var(--leading-body2);
+    font-weight: var(--font-medium);
+  }
+  .typo-body2-bold {
+    font-family: var(--font-sans);
+    font-size: var(--text-body2-bold);
+    line-height: var(--leading-body2-bold);
+    font-weight: var(--font-bold);
+  }
+  .typo-caption {
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    line-height: var(--leading-caption);
+    font-weight: var(--font-medium);
+  }
+  .typo-small {
+    font-family: var(--font-sans);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    font-weight: var(--font-medium);
+  }
+}
+
+@layer base {
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-palette-white);
+    font-family: var(--font-sans);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100dvh;
+    width: 100%;
+  }
+}
