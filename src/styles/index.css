@@ -41,6 +41,10 @@
   --color-text-primary: #353c49;
   --color-text-secondary: #6d7582;
   --color-text-subtitle: #8d94a0;
+
+  /* 레이아웃 폭: 뷰포트 대비 최소·최대 (본문·헤더 등 공통) */
+  --layout-width-min: 1920px;
+  --layout-width-max: 1920px;
 }
 
 @layer utilities {
@@ -92,6 +96,13 @@
     line-height: var(--leading-small);
     font-weight: var(--font-medium);
   }
+
+  .min-w-layout {
+    min-width: var(--layout-width-min);
+  }
+  .max-w-layout {
+    max-width: var(--layout-width-max);
+  }
 }
 
 @layer base {
@@ -108,5 +119,8 @@
   #root {
     min-height: 100dvh;
     width: 100%;
+    min-width: var(--layout-width-min);
+    max-width: var(--layout-width-max);
+    margin-inline: auto;
   }
 }
