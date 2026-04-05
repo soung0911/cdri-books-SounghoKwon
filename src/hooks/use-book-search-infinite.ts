@@ -9,7 +9,6 @@ export interface UseBookSearchInfiniteResult {
   sentinelRef: RefObject<HTMLDivElement | null>
   hasNextPage: boolean
   isFetchingNextPage: boolean
-  /** 첫 페이지를 아직 받지 못한 로딩 */
   isInitialLoading: boolean
 }
 

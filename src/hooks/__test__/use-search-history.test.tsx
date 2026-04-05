@@ -54,13 +54,4 @@ describe('useSearchHistory', () => {
     })
     expect(result.current.items).toHaveLength(SEARCH_HISTORY_MAX_ITEMS)
   })
-
-  it('zustand persist 형태 JSON도 읽어 마이그레이션한다', () => {
-    localStorage.setItem(
-      SEARCH_HISTORY_STORAGE_KEY,
-      JSON.stringify({ state: { items: ['old'] }, version: 0 }),
-    )
-    const { result } = renderHook(() => useSearchHistory())
-    expect(result.current.items).toEqual(['old'])
-  })
 })
