@@ -1,5 +1,5 @@
 import type { KakaoBookDocument } from '@/apis/book-search'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/@ui/button'
 import { BookLikeButton } from './book-like-button'
 import { formatKrw } from '@/lib/book-text'
 import { ExpandChevron } from './expand-chevron'
@@ -21,7 +21,7 @@ export function BookListItemCollapsed({
   const hasThumbnail = thumbnailUrl.length > 0
 
   return (
-    <article className="flex h-[100px] items-center border-b border-[#d2d6da] pl-12 pr-4">
+    <li className="flex h-[100px] items-center border-b border-[#d2d6da] pl-12 pr-4">
       <div className="relative h-[68px] w-12">
         {hasThumbnail ? (
           <img src={thumbnailUrl} alt="" className="size-full object-cover" loading="lazy" />
@@ -31,31 +31,26 @@ export function BookListItemCollapsed({
         <BookLikeButton isLiked={isLiked} onToggle={onToggleLike} size="sm" />
       </div>
 
-      <div className="ml-6 flex min-w-0 flex-1 items-center gap-4 overflow-hidden">
-        <h3 className="typo-title3 truncate text-(--color-text-primary)">{book.title}</h3>
-        <p className="typo-body2 text-(--color-text-secondary) block">
+      <h3 className="ml-6 min-w-0 flex-1 text-(--color-text-primary)">
+        <span className="typo-title3">{book.title}</span>
+        <span className="typo-body2 ml-[16px] text-(--color-text-secondary)">
           {book.authors.join(', ')}
-        </p>
-      </div>
+        </span>
+      </h3>
 
-      <p className="typo-title3 mx-4 hidden w-[120px] text-right text-(--color-text-primary) sm:block">
+      <p className="typo-title3 mx-4 w-[120px] text-right text-(--color-text-primary)">
         {formatKrw(book.sale_price !== -1 ? book.sale_price : book.price)}
       </p>
 
       <div className="ml-auto flex items-center gap-2">
-        <Button
-          type="button"
-          variant="primary"
-          className="text-center"
-          onClick={() => window.open(book.url, '_blank')}
-        >
+        <Button className="text-center" onClick={() => window.open(book.url, '_blank')}>
           구매하기
         </Button>
-        <Button type="button" variant="secondary" className="gap-1 pr-3" onClick={onToggleExpand}>
+        <Button variant="secondary" className="gap-1 pr-3" onClick={onToggleExpand}>
           상세보기
           <ExpandChevron expanded={false} />
         </Button>
       </div>
-    </article>
+    </li>
   )
 }

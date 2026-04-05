@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useId, useRef, useState, type RefObject } from 'react'
+import { useCallback, useId, useRef, useState, type RefObject } from 'react'
 import CloseIcon from '@/assets/svgs/close.svg?react'
 import ExpandIcon from '@/assets/svgs/expand.svg?react'
 import type { KakaoBookSearchTarget } from '@/apis'
-import { ADVANCED_SEARCH_FIELD_OPTIONS } from '@/constants'
-import { Button } from '../ui'
+import { DETAIL_SEARCH_FIELD_OPTIONS } from '@/constants'
+import { usePointerDownOutside, usePopoverDismiss } from '@/hooks/use-popover'
+import { Button } from '../@ui'
 
 export interface BookDetailSearchPopoverProps {
   onClose: () => void
@@ -30,39 +31,23 @@ export function BookDetailSearchPopover({
   const fieldOptionsListId = useId()
   const [fieldMenuOpen, setFieldMenuOpen] = useState(false)
 
-  const selectedLabel = ADVANCED_SEARCH_FIELD_OPTIONS.find((o) => o.value === target)?.label ?? ''
+  const closeFieldMenu = useCallback(() => {
+    setFieldMenuOpen(false)
+  }, [])
 
-  useEffect(() => {
-    if (!fieldMenuOpen) return
+  usePopoverDismiss({
+    panelRef,
+    anchorRef,
+    onDismiss: onClose,
+  })
 
-    const onPointerDown = (e: PointerEvent) => {
-      if (fieldBlockRef.current?.contains(e.target as Node)) return
-      setFieldMenuOpen(false)
-    }
+  usePointerDownOutside({
+    ref: fieldBlockRef,
+    enabled: fieldMenuOpen,
+    onOutside: closeFieldMenu,
+  })
 
-    document.addEventListener('pointerdown', onPointerDown, true)
-    return () => document.removeEventListener('pointerdown', onPointerDown, true)
-  }, [fieldMenuOpen])
-
-  useEffect(() => {
-    const onPointerDown = (e: PointerEvent) => {
-      const t = e.target as Node
-      if (panelRef.current?.contains(t)) return
-      if (anchorRef.current?.contains(t)) return
-      onClose()
-    }
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-
-    document.addEventListener('pointerdown', onPointerDown, true)
-    document.addEventListener('keydown', onKeyDown)
-    return () => {
-      document.removeEventListener('pointerdown', onPointerDown, true)
-      document.removeEventListener('keydown', onKeyDown)
-    }
-  }, [onClose, anchorRef])
+  const selectedLabel = DETAIL_SEARCH_FIELD_OPTIONS.find((o) => o.value === target)?.label ?? ''
 
   const pickField = useCallback(
     (value: KakaoBookSearchTarget) => {
@@ -82,7 +67,6 @@ export function BookDetailSearchPopover({
     >
       <div className="relative">
         <button
-          type="button"
           className="absolute -right-4 -top-6 flex size-5 items-center justify-center"
           aria-label="상세 검색 닫기"
           onClick={onClose}
@@ -94,7 +78,6 @@ export function BookDetailSearchPopover({
           <div className="flex gap-2">
             <div ref={fieldBlockRef} className="relative w-[100px]">
               <button
-                type="button"
                 aria-expanded={fieldMenuOpen}
                 aria-haspopup="listbox"
                 aria-controls={fieldMenuOpen ? fieldOptionsListId : undefined}
@@ -118,10 +101,9 @@ export function BookDetailSearchPopover({
                   aria-label="검색 조건 선택"
                   className="absolute left-0 top-[calc(100%+4px)] z-40 w-[100px] overflow-hidden rounded bg-(--color-palette-white) py-1 shadow-[0px_0px_4px_0px_rgba(0,0,0,0.25)]"
                 >
-                  {ADVANCED_SEARCH_FIELD_OPTIONS.map((opt) => (
+                  {DETAIL_SEARCH_FIELD_OPTIONS.map((opt) => (
                     <li key={opt.value} role="presentation">
                       <button
-                        type="button"
                         role="option"
                         aria-selected={opt.value === target}
                         className="typo-body2 flex h-[30px] w-full items-center px-2 text-left text-(--color-text-subtitle) hover:bg-(--color-palette-light-gray)"
@@ -151,8 +133,6 @@ export function BookDetailSearchPopover({
           </div>
 
           <Button
-            type="button"
-            variant="primary"
             className="typo-body2 h-9! w-full"
             disabled={query.trim().length === 0}
             onClick={onSearch}

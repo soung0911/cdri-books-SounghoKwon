@@ -14,7 +14,6 @@ export function BookLikeButton({ isLiked, onToggle, size }: BookLikeButtonProps)
 
   return (
     <button
-      type="button"
       aria-pressed={isLiked}
       aria-label={isLiked ? '찜 해제' : '찜하기'}
       className={isLarge ? 'absolute right-2 top-2' : 'absolute right-0 top-0'}

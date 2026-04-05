@@ -1,3 +1,4 @@
+import { KAKAO_BOOK_SEARCH_PATH } from '@/constants'
 import axiosInstance from './axios-instance'
 
 export type KakaoBookSearchSort = 'accuracy' | 'latest'
@@ -38,6 +39,8 @@ export interface KakaoBookSearchResponse {
 export const getSearchBooks = async (
   params: KakaoBookSearchParams
 ): Promise<KakaoBookSearchResponse> => {
-  const { data } = await axiosInstance.get<KakaoBookSearchResponse>('/v3/search/book', { params })
+  const { data } = await axiosInstance.get<KakaoBookSearchResponse>(KAKAO_BOOK_SEARCH_PATH, {
+    params,
+  })
   return data
 }

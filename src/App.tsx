@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { AppLayout } from '@/components/layout'
+import { AppLayout } from '@/components/@layout'
 import { ROUTES } from '@/constants'
 import { HomePage, LikePage } from '@/pages'
 

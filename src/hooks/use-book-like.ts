@@ -1,18 +1,21 @@
-import { useCallback, useState } from 'react'
+import { useMemo } from 'react'
+import type { KakaoBookDocument } from '@/apis/book-search'
+import { useBookLikeStore } from '@/stores/book-like-store'
 
-export function useBookLike() {
-  const [likedIds, setLikedIds] = useState<Set<string>>(() => new Set())
+export interface UseBookLikeResult {
+  likedBooks: KakaoBookDocument[]
+  toggleLike: (book: KakaoBookDocument) => void
+  isLiked: (book: KakaoBookDocument) => boolean
+}
 
-  const toggleLike = useCallback((id: string) => {
-    setLikedIds((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }, [])
-
-  const isLiked = useCallback((id: string) => likedIds.has(id), [likedIds])
-
-  return { likedIds, toggleLike, isLiked }
+export function useBookLike(): UseBookLikeResult {
+  const order = useBookLikeStore((s) => s.order)
+  const books = useBookLikeStore((s) => s.books)
+  const toggleLike = useBookLikeStore((s) => s.toggleLike)
+  const isLiked = useBookLikeStore((s) => s.isLiked)
+  const likedBooks = useMemo(
+    () => order.map((k) => books[k]).filter(Boolean) as KakaoBookDocument[],
+    [order, books],
+  )
+  return { likedBooks, toggleLike, isLiked }
 }

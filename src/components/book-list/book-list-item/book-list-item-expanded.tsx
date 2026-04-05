@@ -1,5 +1,5 @@
 import type { KakaoBookDocument } from '@/apis/book-search'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/@ui/button'
 import { BookLikeButton } from './book-like-button'
 import { formatKrw } from '@/lib/book-text'
 import { ExpandChevron } from './expand-chevron'
@@ -22,7 +22,7 @@ export function BookListItemExpanded({
   const hasThumbnail = thumbnailUrl.length > 0
 
   return (
-    <article className="border-b border-[#d2d6da] bg-(--color-palette-light-gray)/35 pl-[54px] pt-[24px] pr-[16px] pb-[40px]">
+    <li className="border-b border-[#d2d6da] pl-[54px] pt-[24px] pr-[16px] pb-[40px]">
       <div className="flex flex-row gap-8">
         <div className="relative h-[280px] w-[210px]">
           {hasThumbnail ? (
@@ -35,7 +35,9 @@ export function BookListItemExpanded({
 
         <div className="flex flex-1 flex-col mt-5">
           <div className="flex flex-wrap items-center gap-4">
-            <h3 className="typo-title3 text-(--color-text-primary)">{book.title}</h3>
+            <h3 className="typo-title3 text-(--color-text-primary) leading-[26px]!">
+              {book.title}
+            </h3>
             <p className="typo-body2 text-(--color-text-subtitle)">{book.authors.join(', ')}</p>
           </div>
 
@@ -48,12 +50,7 @@ export function BookListItemExpanded({
         </div>
 
         <div className="flex flex-col items-end justify-between gap-4">
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-[115px] gap-1 pr-3"
-            onClick={onToggleExpand}
-          >
+          <Button variant="secondary" className="w-[115px] gap-1 pr-3" onClick={onToggleExpand}>
             상세보기
             <ExpandChevron expanded />
           </Button>
@@ -63,7 +60,9 @@ export function BookListItemExpanded({
                 <span className="typo-small w-[37px] text-right text-(--color-text-subtitle)">
                   원가
                 </span>
-                <span className="typo-title3 line-through decoration-solid text-(--color-text-primary)">
+                <span
+                  className={`typo-title3 text-(--color-text-primary) ${showDiscount ? 'line-through decoration-solid' : ''}`}
+                >
                   {formatKrw(book.price)}
                 </span>
               </div>
@@ -80,7 +79,6 @@ export function BookListItemExpanded({
             </div>
 
             <Button
-              type="button"
               variant="primary"
               className="w-[240px] max-w-full text-center"
               onClick={() => window.open(book.url, '_blank')}
@@ -90,6 +88,6 @@ export function BookListItemExpanded({
           </div>
         </div>
       </div>
-    </article>
+    </li>
   )
 }

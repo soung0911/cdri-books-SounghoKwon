@@ -19,7 +19,7 @@ export function HomePage() {
           setSearchTarget(undefined)
           setSubmittedQuery(query)
         }}
-        onAdvancedSearch={({ query, target }) => {
+        onDetailSearch={({ query, target }) => {
           setExpandedId(null)
           setInput('')
           setSearchTarget(target)
